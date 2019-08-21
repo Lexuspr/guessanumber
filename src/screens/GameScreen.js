@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { View, Text, StyleSheet, Button, Alert } from 'react-native'
 import NumberContainer from '../components/presentational/NumberContainer'
 import Card from '../components/presentational/Card'
+import DefaultStyles from '../../constants/default-styles'
 
 function GenerateRandomNumber(min, max, exclude) {
     min = Math.ceil(min)
@@ -49,7 +50,7 @@ function GameScreen({ userChoice, onGameOver }) {
 
     return (
         <View style={styles.container}>
-            <Text>Opponent's Guess</Text>
+            <Text style={DefaultStyles.bodyText}>Opponent's Guess</Text>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card style={styles.buttonContainer}>
                 <Button title="LOWER" onPress={() => nextGuessHandler('lower')}/>

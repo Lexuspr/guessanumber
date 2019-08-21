@@ -4,7 +4,10 @@ import { View, StyleSheet, Text, Button, TouchableWithoutFeedback, Keyboard, Ale
 import Colors from '../../constants/colors'
 import Card from '../components/presentational/Card'
 import Input from '../components/presentational/Input'
-import NumberContainer from '../components/presentational/NumberContainer';
+import NumberContainer from '../components/presentational/NumberContainer'
+import DefaultStyles from '../../constants/default-styles'
+
+
 
 export default function StartGameScreen({ onStartGame }) {
 
@@ -38,7 +41,7 @@ export default function StartGameScreen({ onStartGame }) {
             <View style={styles.container}>
                 <Text style={styles.title}>Start a New Game!</Text>
                 <Card style={styles.inputContainer}>
-                    <Text>Select a Number</Text>
+                    <Text style={DefaultStyles.bodyText}>Select a Number</Text>
                     <Input 
                         style={styles.input} 
                         blurOnSubmit 
@@ -68,7 +71,7 @@ export default function StartGameScreen({ onStartGame }) {
                 </Card>
                 {confirmed ? (
                     <Card style={styles.summaryContainer}>
-                        <Text>You selected</Text>
+                        <Text style={DefaultStyles.bodyText}>You selected</Text>
                         <NumberContainer>
                             {selectedNumber}
                         </NumberContainer>
