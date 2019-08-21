@@ -6,6 +6,7 @@ import Card from '../components/presentational/Card'
 import Input from '../components/presentational/Input'
 import NumberContainer from '../components/presentational/NumberContainer'
 import DefaultStyles from '../../constants/default-styles'
+import MainButton from '../components/presentational/MainButton';
 
 
 
@@ -75,10 +76,9 @@ export default function StartGameScreen({ onStartGame }) {
                         <NumberContainer>
                             {selectedNumber}
                         </NumberContainer>
-                        <Button 
-                            title='START GAME'
-                            onPress={() => onStartGame(selectedNumber)}
-                        />
+                        <MainButton onPress={() => onStartGame(selectedNumber)}>
+                        START GAME
+                        </MainButton>
                     </Card>
                 )
                 :
