@@ -48,9 +48,9 @@ export default function App() {
       <Header title="Guess a Number"/>
       {
         userNumber ? 
-          guessAttempts > 0 ? 
+          guessAttempts.length > 0 ? 
             <GameOverScreen 
-              roundsNumber={guessAttempts} 
+              roundsNumber={guessAttempts.length} 
               userNumber={userNumber}
               onNewGame={newGameHandler}
             /> 

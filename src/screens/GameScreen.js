@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { View, Text, StyleSheet, Alert } from 'react-native'
+import { View, Text, StyleSheet, Alert, ScrollView, FlatList } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import NumberContainer from '../components/presentational/NumberContainer'
 import Card from '../components/presentational/Card'
@@ -16,9 +16,19 @@ function GenerateRandomNumber(min, max, exclude) {
         rndNumber
 }
 
+function renderListItem({item, index}, length){
+    return (
+        <View style={styles.listItem}>
+            <Text style={DefaultStyles.bodyText}>#{length - index}</Text>
+            <Text style={DefaultStyles.bodyText}>{item}</Text>
+        </View>
+    )
+}
+
 function GameScreen({ userChoice, onGameOver }) {
-    const [currentGuess, setCurrentGuess] = useState(GenerateRandomNumber(1, 100, userChoice))
-    const [rounds, setRounds] = useState(0)
+    const initialGuess = GenerateRandomNumber(1, 100, userChoice)
+    const [currentGuess, setCurrentGuess] = useState(initialGuess)
+    const [rounds, setRounds] = useState([initialGuess])
 
     const currentLow = useRef(1)
     const currentHigh = useRef(100)
@@ -40,14 +50,14 @@ function GameScreen({ userChoice, onGameOver }) {
                 currentHigh.current = currentGuess
                 break
             case 'greater':
-                currentLow.current = currentGuess
+                currentLow.current = currentGuess + 1
                 break
             default:
                 return
         }
         const nextNumber = GenerateRandomNumber(currentLow.current, currentHigh.current, currentGuess)
         setCurrentGuess(nextNumber)
-        setRounds(currentRounds => currentRounds + 1)
+        setRounds(currentRounds => [nextNumber, ...currentRounds])
     }
 
     return (
@@ -70,6 +80,17 @@ function GameScreen({ userChoice, onGameOver }) {
                     />
                 </MainButton>
             </Card>
+            <View style={styles.listContainer}>
+                {/* <ScrollView contentContainerStyle={styles.list}>
+                    {rounds.map((round, index) => renderListItem(round, rounds.length - index))}
+                </ScrollView> */}
+                <FlatList 
+                    data={rounds} 
+                    renderItem={(data) => renderListItem(data, rounds.length)}
+                    keyExtractor={(item) => item.toString()}
+                    contentContainerStyle={styles.list}
+                />
+            </View>
         </View>
     )
 }
@@ -85,6 +106,25 @@ const styles = StyleSheet.create({
         marginTop: 20,
         width: 300,
         maxWidth: '80%'
+    },
+    listItem: {
+        borderColor: '#ccc',
+        padding: 15,
+        marginVertical: 10,
+        backgroundColor: 'white',
+        borderWidth: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%'
+    },
+    listContainer: {
+        width: '60%',
+        flex: 1
+    },
+    list: {
+        flexGrow: 1,
+        //alignItems: 'center',
+        justifyContent: 'flex-end'
     }
 })
 
