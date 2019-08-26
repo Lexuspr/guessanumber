@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Button, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, Dimensions, ScrollView } from 'react-native'
 import DefaultStyles from '../../constants/default-styles'
 import Colors from '../../constants/colors'
 import successImg from '../../assets/img/success.png'
@@ -7,21 +7,23 @@ import MainButton from '../components/presentational/MainButton';
 
 function GameOverScreen({ roundsNumber, userNumber, onNewGame }) {
     return (
-        <View style={styles.container}>
-            <Text style={DefaultStyles.title}>The Game is Over!</Text>
-            <View style={styles.imageContainer}>
-                <Image 
-                    source={successImg}
-                    style={styles.image}
-                />  
+        <ScrollView>
+            <View style={styles.container}>
+                <Text style={DefaultStyles.title}>The Game is Over!</Text>
+                <View style={styles.imageContainer}>
+                    <Image 
+                        source={successImg}
+                        style={styles.image}
+                    />  
+                </View>
+                <View style={styles.resultContainer}>
+                    <Text style={{...DefaultStyles.title, ...styles.resultText}}>Your phone needed <Text style={styles.highligh}>{roundsNumber}</Text> rounds to guess the number <Text style={styles.highligh}>{userNumber}</Text></Text>
+                </View>
+                <MainButton onPress={onNewGame}>
+                    New Game
+                </MainButton>
             </View>
-            <View style={styles.resultContainer}>
-                <Text style={{...DefaultStyles.title, ...styles.resultText}}>Your phone needed <Text style={styles.highligh}>{roundsNumber}</Text> rounds to guess the number <Text style={styles.highligh}>{userNumber}</Text></Text>
-            </View>
-            <MainButton onPress={onNewGame}>
-                New Game
-            </MainButton>
-        </View>
+        </ScrollView>
     )
 }
 
@@ -36,13 +38,13 @@ const styles = StyleSheet.create({
         height: '100%'
     },
     imageContainer: {
-        width: 300,
-        height: 300,
-        borderRadius: 150,
+        width: Dimensions.get('window').width * 0.7,
+        height: Dimensions.get('window').width * 0.7,
+        borderRadius: Dimensions.get('window').width * 0.7 / 2,
         borderWidth: 3,
         borderColor: 'black',
         overflow: 'hidden',
-        marginVertical: 30
+        marginVertical: Dimensions.get('window').height / 30
     },
     highligh: {
         color: Colors.primary
@@ -52,7 +54,8 @@ const styles = StyleSheet.create({
         
     },
     resultText: {
-        textAlign: 'center'
+        textAlign: 'center',
+        fontSize: Dimensions.get('window').height < 400 ? 16 : 20
     }
 })
 
